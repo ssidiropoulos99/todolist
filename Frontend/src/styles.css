@@ -1,0 +1,28 @@
+/* Style for individual buttons */
+.todo-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.todo-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.todo-buttons button {
+  margin: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}

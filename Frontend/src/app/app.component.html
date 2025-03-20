@@ -1,0 +1,107 @@
+<h1>To-Do Items Project</h1>
+<h2>To-Do Items</h2>
+
+ <div class="todo-buttons">
+    <button type="button" class="todo-btn" (click)="getById()">Get by ID</button>
+    <button type="button" class="todo-btn" (click)="postNewItem()">Add new</button>
+    <button type="button" class="todo-btn" (click)="pendingItem()">Pending Tasks</button>
+    <button type="button" class="todo-btn" (click)="completedItem()">Completed Tasks</button>
+</div>
+
+
+@if (allData.length > 0 && printAllData){
+<div class="row">
+  <div class="col-4">
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Completed</th>
+          <th>Delete?</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of allData; track $index) {
+          <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.itemTitle}}</td>
+            <td>{{item.description}}</td>
+             @if (item.completed == true) {
+              <td>Completed</td>
+             } @else {
+              <td>Pending <button type="button" class="todo-btn" (click)="markItem(item.id)">Mark as done</button></td>
+             }
+            <td><button type="button" class="todo-btn" (click)="deleteItem(item.id)">Delete</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+}
+
+@if (allData.length > 0 && printPending && !printAllData){
+  <div class="row">
+    <div class="col-4">
+      <table>
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Completed</th>
+            <th>Delete?</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of allData; track $index) {
+            @if(item.completed == false) {
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.itemTitle}}</td>
+              <td>{{item.description}}</td>
+                <td>Pending <button type="button" class="todo-btn" (click)="markItem(item.id)">Mark as done</button></td>
+              <td><button type="button" class="todo-btn" (click)="deleteItem(item.id)">Delete</button></td>
+            </tr>
+          }
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+
+@if (dataById.length > 0 && printDataByID){
+  <div class="row">
+    <div class="col-4">
+      <table>
+        <thead>
+          <tr>
+            <th>Number</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Completed</th>
+            <th>Delete?</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of dataById; track $index) {
+            <tr>
+              <td>{{item.id}}</td>
+              <td>{{item.itemTitle}}</td>
+              <td>{{item.description}}</td>
+               @if (item.completed == true) {
+                <td>Completed</td>
+               } @else {
+                <td>Pending <button type="button" class="todo-btn" (click)="markItem(item.id)">Mark as done</button></td>
+               }
+              <td><button type="button" class="todo-btn" (click)="deleteItem(item.id)">Delete</button></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
