@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { error } from 'console';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +34,20 @@ export class AppComponent implements OnInit {
         console.log(result);
         this.allData = result;
       }
+
     );
+  }
+
+  pendingItem() {
+    this.printPending= true;
+    this.printAllData= false;
+    this.printCompleted= false;
+  }
+
+  completedItem() {
+    this.printCompleted= true;
+    this.printPending = false;
+    this.printAllData= false;
   }
 
   public dataById: any [] = [];
@@ -43,15 +57,14 @@ export class AppComponent implements OnInit {
     let id = this.checkNumber("print");
 
     if (!id) {
+      alert("no such id");
       return ;
     }
 
-    this.http.get(`${this.apiURL}/${id}`).subscribe(
-      (result:any) => {
-        console.log(result);
-        this.dataById = [result];
-      }
-    )
+    this.http.get(`${this.apiURL}/${id}`).subscribe({
+      next: (result:any) => {this.dataById = [result];}
+      , error: () => {alert("No such ID found.")}}
+    );
   }
 
   formData = {
@@ -71,8 +84,11 @@ export class AppComponent implements OnInit {
     if (!this.formData.description) {
       return;
     }
-    this.http.post(this.apiURL, this.formData).subscribe((response) => {console.log(response);});
-  }
+    this.http.post(this.apiURL, this.formData).subscribe(
+        {next:() => {window.location.reload()}}
+      );
+    }
+
 
   deleteItem(id: number) {
     this.http.delete(`${this.apiURL}/${id}`).subscribe(
@@ -80,20 +96,10 @@ export class AppComponent implements OnInit {
     );
   }
 
-  markItem(id: number) {
-    this.http.put(`${this.apiURL}/${id}/completed`, null).subscribe(
-      {next: () => {this.allData}}
-      //{next: () => {window.location.reload()}}
+  markItem(item: any) {
+    this.http.put(`${this.apiURL}/${item.id}/completed`, null).subscribe(
+      {next: () => {item.completed=true}}
     );
-  }
-
-  pendingItem() {
-    this.printPending= true;
-    this.printAllData= false;
-  }
-
-  completedItem() {
-
   }
 
   checkString(flag: string) {

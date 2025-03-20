@@ -43,8 +43,7 @@ namespace API.Controllers
             
             _context.todolist.Add(todoItem);
             _context.SaveChanges();
-
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.ID }, todoItem);
+            return Ok();
         }
 
         [HttpDelete("{Id}")]
