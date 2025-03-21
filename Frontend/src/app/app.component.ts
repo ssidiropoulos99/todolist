@@ -112,6 +112,12 @@ export class AppComponent implements OnInit {
     );
   }
 
+  unmarkItem(item: any) {
+    this.http.put(`${this.apiURL}/${item.id}/completed`, null).subscribe(
+      {next: () => {item.completed=false}}
+    );
+  }
+
   checkString(flag: string) {
     do {
       const new_string = prompt(`Please enter ${flag} of the to-do item you want to add:`);
