@@ -43,8 +43,7 @@ namespace API.Controllers
             
             _context.todolist.Add(todoItem);
             _context.SaveChanges();
-
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.ID }, todoItem);
+            return Ok();
         }
 
         [HttpDelete("{Id}")]
@@ -70,14 +69,8 @@ namespace API.Controllers
             if (todo == null) {
                 return NotFound();
             }
-
-            if (todo.completed == true){
-                return NoContent();
-            } else {
-                todo.completed = true;
-                _context.SaveChanges();
-            }
-
+            todo.completed = !todo.completed;
+            _context.SaveChanges();
             return Ok(todo);
         }
 
